@@ -7,7 +7,12 @@ var axios = require('axios');
 router.get('/api/:keyword', function(req, res, next) {
   var keyword = req.params.keyword;
   var query = "SELECT * FROM map WHERE keyword='"+keyword+"'";
-  var outputJson = {};
+  var outputJson = {
+    status: "err",
+    result: {
+      data : []
+    }
+  };
   db.query(query, function(err, rows){
     var idQuery;
     if(rows.lenght == 0){
@@ -18,14 +23,15 @@ router.get('/api/:keyword', function(req, res, next) {
       var redashUrl = "https://dashboard.pandhu.id/api/queries/"+idQuery+"/results.json?api_key=Y9gQbOPDe1ccpZ2V9UZKtvnrFp0ct5Z1VpujjiL0";
       axios.get(redashUrl).
       then(function(response){
-        outputJson = response.data.query_result.data.rows;
+        outputJson.status = "ok";
+        outputJson.result.data = response.data.query_result.data.rows;
         res.json(outputJson);
       }).
       catch(function(err){
-        res.json({});
+        res.json(outputJson);
       });
     } catch(err){
-      res.json({});
+      res.json(outputJson);
     }
   });
 
