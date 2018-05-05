@@ -1,9 +1,13 @@
 var mysql = require('mysql')
+var config = require('config')
+
+dbConfig = config.get('db');
+
 var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'password0!',
-  database : 'redash_map'
+  host     : dbConfig.host,
+  user     : dbConfig.user,
+  password : dbConfig.pass,
+  database : dbConfig.database
 });
 
 connection.connect()

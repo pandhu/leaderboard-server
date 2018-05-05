@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var db = require('../db');
 var axios = require('axios');
+var config = require('config')
+var redashConf = config.get('redash');
 
 /* GET home page. */
 router.get('/api/:keyword', function(req, res, next) {
@@ -20,7 +22,7 @@ router.get('/api/:keyword', function(req, res, next) {
     }
     try{
       idQuery = rows[0].id_query;
-      var redashUrl = "https://dashboard.pandhu.id/api/queries/"+idQuery+"/results.json?api_key=Y9gQbOPDe1ccpZ2V9UZKtvnrFp0ct5Z1VpujjiL0";
+      var redashUrl = "https://dashboard.pandhu.id/api/queries/"+idQuery+"/results.json?api_key="+redashConf.userKey;
       axios.get(redashUrl).
       then(function(response){
         outputJson.status = "ok";
