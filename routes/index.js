@@ -8,14 +8,14 @@ var redashConf = config.get('redash');
 /* GET home page. */
 router.get('/api/:keyword', function(req, res, next) {
   var keyword = req.params.keyword;
-  var query = "SELECT * FROM map WHERE keyword='"+keyword+"'";
+  var query = "SELECT * FROM map WHERE keyword = ?";
   var outputJson = {
     status: "err",
     result: {
       data : []
     }
   };
-  db.query(query, function(err, rows){
+  db.query(query, keyword, function(err, rows){
     var idQuery;
     if(rows.lenght == 0){
       return;
