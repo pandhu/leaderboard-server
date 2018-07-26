@@ -22,7 +22,7 @@ router.get('/api/:keyword', function(req, res, next) {
     }
     try{
       idQuery = rows[0].id_query;
-      var redashUrl = "https://dashboard.pandhu.id/api/queries/"+idQuery+"/results.json?api_key="+redashConf.userKey;
+      var redashUrl = "https://dashboard.bazarafra.com/api/queries/"+idQuery+"/results.json?api_key="+redashConf.userKey;
       axios.get(redashUrl).
       then(function(response){
         outputJson.status = "ok";
